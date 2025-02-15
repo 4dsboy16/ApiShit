@@ -12,27 +12,40 @@ getgenv().request = function(options)
 end
 getgenv().cloneref = function(ref)
   if game:FindFirstChild(ref.Name) or ref.Parent == game then 
-		return ref
-	else
-		local class = ref.ClassName
-		pcall(function()
-			local cloned = Instance.new(class)
-		end)
-		local mt = {
-			__index = ref,
-			__newindex = function(t, k, v)
-				if k == "Name" then
-					ref.Name = v
-				end
-				rawset(t, k, v)
-			end
-		}
-		local proxy = setmetatable({}, mt)
-		return proxy
-	end
+    return ref
+  else
+    local class = ref.ClassName
+    pcall(function()
+      local cloned = Instance.new(class)
+    end)
+    local mt = {
+      __index = ref,
+      __newindex = function(t, k, v)
+        if k == "Name" then
+          ref.Name = v
+        end
+        rawset(t, k, v)
+      end
+    }
+    local proxy = setmetatable({}, mt)
+    return proxy
+  end
 end
-getgenv().checkcaller = function()
-  return true
+local Params = {
+    RepoURL = "https://raw.githubusercontent.com/luau/UniversalSynSaveInstance/main/",
+    SSI = "saveinstance",
+}
+local synsaveinstance = loadstring(game:HttpGet(Params.RepoURL .. Params.SSI .. ".luau", true), Params.SSI)()
+getgenv().saveinstance = function(options)
+  options = options or {}
+  assert(type(options) == "table", "invalid argument #1 to 'saveinstance' (table expected, got " .. type(options) .. ") ", 2)
+  print("saveinstance Powered by UniversalSynSaveInstance | AGPL-3.0 license")
+  synsaveinstance(options)
+end
+getgenv().savegame = getgenv().saveinstance
+getgenv().getthread = coroutine.running
+getgenv().lrm_load_script = function(script_id)
+  return loadstring("https://api.luarmor.net/files/v3/l/" .. script_id .. ".lua")({ Origin = "AWP" })
 end
 getgenv().shared = shared
 local renv = {
@@ -84,27 +97,39 @@ local renv = {
 	getmetatable = getmetatable, setmetatable = setmetatable
 }
 table.freeze(renv)
-getgenv().getrenv = newcclosure(function()
+getgenv().getrenv = function()
   return renv
-end)
+end
+getgenv().getaffiliateid = function()
+  return "Proton"
+end
+getgenv().getexecutorname = function()
+  return "Proton"
+end
+getgenv().getexecutorversion = function()
+  return "v1.0.1"
+end
+getgenv().identifyexecutor = function()
+  return getgenv().getexecutorname(), getgenv().getexecutorversion
+end
 if not shared.vulnsm then
   getgenv().listfiles = function(path)
     if path == "" or path == blockedpaths then 
-			return error("[ Proton ]: Invalid path", 2)
-		else 
-			return oldlf(path)
-		end
+      return error("[ Proton ]: Invalid path", 2)
+    else 
+      return oldlf(path)
+    end
   end
   print("[ Proton ]: Vulns mitigated.")
   shared.vulnsm = true
 end
 if not shared.notified then 
   game:GetService("StarterGui"):SetCore("SendNotification", {
-	  Title = "Proton Loaded",
-	  Text = "You are ready to execute scripts now.\nhttps://discord.gg/ZhGUcqRfkJ", 
-	  Duration = 3,
-	  Icon = "rbxassetid://136874313360847" 
-	})
+    Title = "Proton Loaded",
+    Text = "You are ready to execute scripts now.\nhttps://discord.gg/ZhGUcqRfkJ", 
+    Duration = 3,
+    Icon = "rbxassetid://136874313360847" 
+  })
   shared.notified = true 
 end
 getgenv().IS_PROTON_LOADED = true
