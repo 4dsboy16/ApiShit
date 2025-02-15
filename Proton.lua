@@ -1,11 +1,14 @@
 getgenv().IS_PROTON_LOADED = false
 local oldrq = request
 local oldlf = listfiles
+local hwid = HttpService:GenerateGUID(false)
 getgenv().request = function(options)
   if option.Headers then
     options.Headers["User-Agent"] = "Proton/RobloxApp/1.0.1"
+    options.Headers["Proton-Fingerprint"] = tostring(hwid)
+    options.Headers["Xeno-Fingerprint"] = nil
   else
-    options.Headers = {["User-Agent"] = "Proton/RobloxApp/1.0.1"}
+    options.Headers = {["User-Agent"] = "Proton/RobloxApp/1.0.1", ["Proton-Fingerprint"] = tostring(hwid), ["Xeno-Fingerprint"] = nil}
   end
   local response = oldrq(options)
   return response
@@ -39,7 +42,7 @@ local synsaveinstance = loadstring(game:HttpGet(Params.RepoURL .. Params.SSI .. 
 getgenv().saveinstance = function(options)
   options = options or {}
   assert(type(options) == "table", "invalid argument #1 to 'saveinstance' (table expected, got " .. type(options) .. ") ", 2)
-  print("saveinstance Powered by UniversalSynSaveInstance | AGPL-3.0 license")
+  print("[ Proton ]: Powered by UniversalSynSaveInstance")
   synsaveinstance(options)
 end
 getgenv().savegame = getgenv().saveinstance
@@ -111,6 +114,109 @@ getgenv().getexecutorversion = function()
 end
 getgenv().identifyexecutor = function()
   return getgenv().getexecutorname(), getgenv().getexecutorversion
+end
+getgenv().gethwid = function()
+  return hwid
+end
+getgenv().get_hwid = getgenv().gethwid
+if not shared.aliases then
+  getgenv().debug = table.clone(debug)
+  getgenv().debug.getconstant = function(f, i) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.getconstants = function(f) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.getproto = function(f, i, e) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.getprotos = function(f) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.getstack = function(f, i) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.getupvalue = function(f, i) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.getupvalues = function(f) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.setconstant = function(f, i, v) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.setstack = function(f, i, v) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.validlevel = function(f, i, v) 
+    return "[ Proton ]: Not implemented"
+  end 
+  getgenv().debug.getcallstack = function(f, i, v) 
+    return "[ Proton ]: Not implemented"
+  end
+  getgenv().get_calling_script = getcallingscript 
+  getgenv().isreadable = isreadonly 
+  getgenv().isexecclosure = isexecutorclosure
+  getgenv().is_executor_closure = isexecclosure
+  getgenv().clonefunc = clonefunction
+  getgenv().get_scripts = getrunningscripts
+  getgenv().getmodules = getloadedmodules
+  getgenv().makereadonly = setreadonly
+  getgenv().make_readonly = getgenv().makereadonly
+  getgenv().is_l_closure = islclosure 
+  getgenv().randomstring = crypt.random
+  getgenv().syn.write_clipboard = setclipboard
+  getgenv().setrbxclipboard = setclipboard
+  getgenv().writeclipboard = setclipboard
+  getgenv().syn_backup = getgenv().syn
+  getgenv().syn.crypt = getgenv().crypt
+  getgenv().syn.crypto = getgenv().crypt
+  getgenv().syn.cache_replace = cache.replace 
+  getgenv().syn.cache_invalidate = cache.invalidate 
+  getgenv().syn.is_cached = cache.iscached 
+  getgenv().syn.set_thread_identity = setthreadidentity 
+  getgenv().syn.request = request 
+  getgenv().syn.get_thread_identity = getthreadidentity 
+  getgenv().syn.queue_on_teleport = queueonteleport 
+  getgenv().fluxus = {}
+  getgenv().fluxus.set_thread_identity = setthreadidentity 
+  getgenv().fluxus.queue_on_teleport = queueonteleport
+  getgenv().fluxus.request = request 
+  getgenv().string = string
+  getgenv().dumpbytecode = getscriptbytecode 
+  getgenv().loadfileasync = loadfile
+  getgenv().clearconsole = rconsoleclear 
+  getgenv().printconsole = rconsoleprint 
+  getgenv().getsynasset = getcustomasset 
+  getgenv().debug.getregistry = getreg 
+  getgenv().readfileasync = readfile 
+  getgenv().writefileasync = writefile
+  getgenv().appendfileasync = appendfile 
+  getgenv().saveplace = saveinstance 
+  getgenv().protect_gui = syn.protect_gui 
+  getgenv().unprotect_gui = syn.unprotect_gui 
+  getgenv().set_thread_identity = setthreadidentity 
+  getgenv().get_thread_identity = getthreadidentity 
+  getgenv().checkcallstack = checkcaller 
+  getgenv().rconsoleerror = getgenv().rconsoleerr 
+  getgenv().rconsolename = getgenv().rconsolesettitle
+  getgenv().consolesettitle = getgenv().rconsolesettitle
+  getgenv().consolename = getgenv().rconsolesettitle
+  getgenv().rconsoleinputasync = getgenv().rconsoleinput
+  getgenv().consoleclear = getgenv().rconsoleclear
+  getgenv().consoledestroy = getgenv().rconsoledestroy
+  getgenv().consoleinput = getgenv().rconsoleinput
+  getgenv().consoleprint = getgenv().rconsoleprint
+  getgenv().consoleinfo = getgenv().rconsoleinfo
+  getgenv().consolecreate = getgenv().rconsolecreate
+  getgenv().consolewarn = getgenv().rconsolewarn
+  getgenv().syn.protectgui = getgenv().syn.protect_gui
+  getgenv().syn.unprotectgui = getgenv().syn.unprotect_gui
+  getgenv().getprotectedguis = getgenv().getprotecteduis
+  getgenv().debug.isvalidlevel = getgenv().debug.validlevel
+  getgenv().is_our_closure = isexecutorclosure 
+  getgenv().issynapsefunction = isexecutorclosure
+  shared.aliases = true
 end
 if not shared.vulnsm then
   getgenv().listfiles = function(path)
