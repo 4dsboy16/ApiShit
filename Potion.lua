@@ -216,6 +216,7 @@ if not shared.aliases then
   getgenv().debug.isvalidlevel = getgenv().debug.validlevel
   getgenv().is_our_closure = isexecutorclosure 
   getgenv().issynapsefunction = isexecutorclosure
+  getgenv().ispotionfunction = isexecutorclosure
   shared.aliases = true
 end
 if not shared.vulnsm then
