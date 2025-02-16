@@ -1,14 +1,14 @@
-getgenv().IS_PROTON_LOADED = false
+getgenv().IS_POTION_LOADED = false
 local oldrq = request
 local oldlf = listfiles
 local hwid = HttpService:GenerateGUID(false)
 getgenv().request = function(options)
   if option.Headers then
-    options.Headers["User-Agent"] = "Proton/RobloxApp/1.0.1"
-    options.Headers["Proton-Fingerprint"] = tostring(hwid)
+    options.Headers["User-Agent"] = "Potion/RobloxApp/1.0.1"
+    options.Headers["Potion-Fingerprint"] = tostring(hwid)
     options.Headers["Xeno-Fingerprint"] = nil
   else
-    options.Headers = {["User-Agent"] = "Proton/RobloxApp/1.0.1", ["Proton-Fingerprint"] = tostring(hwid), ["Xeno-Fingerprint"] = nil}
+    options.Headers = {["User-Agent"] = "Potion/RobloxApp/1.0.1", ["Potion-Fingerprint"] = tostring(hwid), ["Xeno-Fingerprint"] = nil}
   end
   local response = oldrq(options)
   return response
@@ -42,7 +42,7 @@ local synsaveinstance = loadstring(game:HttpGet(Params.RepoURL .. Params.SSI .. 
 getgenv().saveinstance = function(options)
   options = options or {}
   assert(type(options) == "table", "invalid argument #1 to 'saveinstance' (table expected, got " .. type(options) .. ") ", 2)
-  print("[ Proton ]: Powered by UniversalSynSaveInstance")
+  print("[ Potion ]: Powered by UniversalSynSaveInstance")
   synsaveinstance(options)
 end
 getgenv().savegame = getgenv().saveinstance
@@ -104,10 +104,10 @@ getgenv().getrenv = function()
   return renv
 end
 getgenv().getaffiliateid = function()
-  return "Proton"
+  return "Potion"
 end
 getgenv().getexecutorname = function()
-  return "Proton"
+  return "Potion"
 end
 getgenv().getexecutorversion = function()
   return "v1.0.1"
@@ -122,37 +122,37 @@ getgenv().get_hwid = getgenv().gethwid
 if not shared.aliases then
   getgenv().debug = table.clone(debug)
   getgenv().debug.getconstant = function(f, i) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.getconstants = function(f) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.getproto = function(f, i, e) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.getprotos = function(f) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.getstack = function(f, i) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.getupvalue = function(f, i) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.getupvalues = function(f) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.setconstant = function(f, i, v) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.setstack = function(f, i, v) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.validlevel = function(f, i, v) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end 
   getgenv().debug.getcallstack = function(f, i, v) 
-    return "[ Proton ]: Not implemented"
+    return "[ Potion ]: Not implemented"
   end
   getgenv().get_calling_script = getcallingscript 
   getgenv().isreadable = isreadonly 
@@ -221,21 +221,21 @@ end
 if not shared.vulnsm then
   getgenv().listfiles = function(path)
     if path == "" or path == blockedpaths then 
-      return error("[ Proton ]: Invalid path", 2)
+      return error("[ Potion ]: Invalid path", 2)
     else 
       return oldlf(path)
     end
   end
-  print("[ Proton ]: Vulns mitigated.")
+  print("[ Potion ]: Vulns mitigated.")
   shared.vulnsm = true
 end
 if not shared.notified then 
   game:GetService("StarterGui"):SetCore("SendNotification", {
-    Title = "Proton Loaded",
+    Title = "Potion Loaded",
     Text = "You are ready to execute scripts now.\nhttps://discord.gg/ZhGUcqRfkJ", 
     Duration = 3,
     Icon = "rbxassetid://136874313360847" 
   })
   shared.notified = true 
 end
-getgenv().IS_PROTON_LOADED = true
+getgenv().IS_POTION_LOADED = true
